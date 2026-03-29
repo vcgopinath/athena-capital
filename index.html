@@ -12,13 +12,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-REN5THJRFM"></script>
+  <!-- Google Analytics (loaded only with consent) -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-REN5THJRFM');
+    if (localStorage.getItem('analytics-consent') === 'accepted') {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-REN5THJRFM';
+      document.head.appendChild(s);
+      gtag('js', new Date());
+      gtag('config', 'G-REN5THJRFM');
+    }
   </script>
 </head>
 <body>
@@ -351,8 +356,8 @@
             <h4>Resources</h4>
             <a href="#">SAM.gov Profile</a>
             <a href="#">Capability Statement</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="#" id="footerCookieSettings">Cookie Settings</a>
           </div>
         </div>
       </div>
@@ -362,6 +367,17 @@
       </div>
     </div>
   </footer>
+
+  <!-- Cookie Consent Banner -->
+  <div class="cookie-banner" id="cookieBanner">
+    <div class="cookie-banner-inner">
+      <p>We use cookies to analyze website traffic and improve your experience. No personally identifiable information is collected. <a href="privacy.html">Privacy Policy</a></p>
+      <div class="cookie-banner-actions">
+        <button class="cookie-btn cookie-btn-decline" id="cookieDecline">Decline</button>
+        <button class="cookie-btn cookie-btn-accept" id="cookieAccept">Accept</button>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

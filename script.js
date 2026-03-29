@@ -71,23 +71,85 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Contact form ---
   const form = document.getElementById('contactForm');
-  form.addEventListener('submit', () => {
-    const btn = form.querySelector('button[type="submit"]');
-    btn.textContent = 'Sending...';
-    btn.style.background = '#2d6a4f';
-    btn.style.color = '#fff';
-    btn.disabled = true;
-  });
+  if (form) {
+    form.addEventListener('submit', () => {
+      const btn = form.querySelector('button[type="submit"]');
+      btn.textContent = 'Sending...';
+      btn.style.background = '#2d6a4f';
+      btn.style.color = '#fff';
+      btn.disabled = true;
+    });
+  }
 
   // --- Smooth scroll for all anchor links ---
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', (e) => {
+      const href = anchor.getAttribute('href');
+      if (href === '#') return;
       e.preventDefault();
-      const target = document.querySelector(anchor.getAttribute('href'));
+      const target = document.querySelector(href);
       if (target) {
         target.scrollIntoView({ behavior: 'smooth' });
       }
     });
   });
+
+  // --- Cookie Consent Banner ---
+  const cookieBanner = document.getElementById('cookieBanner');
+  const cookieAccept = document.getElementById('cookieAccept');
+  const cookieDecline = document.getElementById('cookieDecline');
+  const footerCookieSettings = document.getElementById('footerCookieSettings');
+
+  function showBanner() {
+    if (cookieBanner) {
+      setTimeout(() => cookieBanner.classList.add('visible'), 500);
+    }
+  }
+
+  function hideBanner() {
+    if (cookieBanner) {
+      cookieBanner.classList.remove('visible');
+    }
+  }
+
+  function enableAnalytics() {
+    localStorage.setItem('analytics-consent', 'accepted');
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-REN5THJRFM';
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-REN5THJRFM');
+  }
+
+  // Show banner if no consent decision has been made
+  if (!localStorage.getItem('analytics-consent')) {
+    showBanner();
+  }
+
+  if (cookieAccept) {
+    cookieAccept.addEventListener('click', () => {
+      enableAnalytics();
+      hideBanner();
+    });
+  }
+
+  if (cookieDecline) {
+    cookieDecline.addEventListener('click', () => {
+      localStorage.setItem('analytics-consent', 'declined');
+      hideBanner();
+    });
+  }
+
+  // Footer "Cookie Settings" link — reopen the banner
+  if (footerCookieSettings) {
+    footerCookieSettings.addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('analytics-consent');
+      showBanner();
+    });
+  }
 
 });
