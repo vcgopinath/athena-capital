@@ -71,22 +71,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Contact form ---
   const form = document.getElementById('contactForm');
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
+  form.addEventListener('submit', () => {
     const btn = form.querySelector('button[type="submit"]');
-    const originalText = btn.textContent;
-    btn.textContent = 'Request Sent!';
+    btn.textContent = 'Sending...';
     btn.style.background = '#2d6a4f';
     btn.style.color = '#fff';
     btn.disabled = true;
-
-    setTimeout(() => {
-      btn.textContent = originalText;
-      btn.style.background = '';
-      btn.style.color = '';
-      btn.disabled = false;
-      form.reset();
-    }, 3000);
   });
 
   // --- Smooth scroll for all anchor links ---
