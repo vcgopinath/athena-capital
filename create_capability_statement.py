@@ -154,7 +154,7 @@ def create_capability_statement():
     differentiators = [
         "Woman-Owned Small Business (WOSB)",
         "SAM.gov Registered | UEI: F1VPSS7P7DM6",
-        "CAGE Code Assigned",
+        "CAGE Code: 1NGH5",
         "Micro-Purchase & GPC Ready",
         "FAR Compliant Operations",
         "24-Hour Quote Turnaround",
